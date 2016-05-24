@@ -1,7 +1,5 @@
 # CADR-o-MONITOR
 
-![](https://raw.githubusercontent.com/cadrspace/cadromonitor/master/app/src/main/ic_launcher-web.png)
-
 This application allows you to get information about hackerspace "Cadr".
 [cadrspace.ru](http://cadrspace.ru)
 
