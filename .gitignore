@@ -1,5 +1,18 @@
 # Built application files
 /*/build/
+.idea/
+.gradle
+gradle  
+/*/local.properties
+/*/out
+/*/*/build
+build  
+/*/*/production
+*.iml
+*.iws
+*.ipr
+*~
+*.swp
 
 # Crashlytics configuations
 com_crashlytics_export_strings.xml
@@ -35,3 +48,4 @@ local.properties
 .Trashes
 ehthumbs.db
 Thumbs.db
+build/generated/mockable-android-23.jar
