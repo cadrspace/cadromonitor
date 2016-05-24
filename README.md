@@ -1,8 +1,14 @@
 # CADR-o-MONITOR
 
-This application allows you to get information about hackerspace "Cadr".
-[cadrspace.ru](http://cadrspace.ru)
+This application allows you to get information about
+[CADR hackerspace](http://cadrspace.ru).
 
-Application fetch image from Webcam installed inside hackrrspace room and you can instant check status and how many people works inside.
+## So What It Does Exactly?
 
-Application works with Android OS.
+When the hackerspace is open, the application shows a notification
+with an image fetched from a hackerspace webcam so you can see how
+many people works inside the room at the moment.
+
+## Requirements
+
+Application works with Android OS version 4.1 or later.
