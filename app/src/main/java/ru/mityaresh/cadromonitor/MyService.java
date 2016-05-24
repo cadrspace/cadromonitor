@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.Timer;
 import java.util.TimerTask;
 import android.app.Notification;
@@ -19,6 +20,8 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.os.IBinder;
 import android.util.Log;
@@ -36,12 +39,22 @@ public class MyService extends Service {
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
+        /*new Thread() {
+            public void run() {
+                sendNotif();
+                try {
+                    Thread.sleep(5000, 0);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();*/
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 sendNotif();
             }
-        }, 0, 15000);
+        }, 0, 5000);
         return START_STICKY;
     }
 
@@ -118,7 +131,23 @@ public class MyService extends Service {
         return readData(reader);
     }
 
+    private static Bitmap getCamImage(String url) {
+        try {
+            String decodedUrl = URLDecoder.decode(url, "UTF-8");
+            decodedUrl = decodedUrl.substring(0, 1 + decodedUrl.indexOf('=')) + "snapshot";
+            return BitmapFactory.decodeStream((InputStream) new URL(decodedUrl).getContent());
+        } catch (MalformedURLException e) {
+            Log.e("MyService", e.getMessage());
+        } catch (UnsupportedEncodingException e) {
+            Log.e("MyService", e.getMessage());
+        } catch (IOException e) {
+            Log.e("MyService", e.getMessage());
+        }
+        return null;
+    }
+
     void sendNotif() {
+        Log.i("MityaInfo", "Noty");
         if (isNetworkConnected() && isInternetAvailable()) {
             String result = "";
             try {
@@ -128,35 +157,41 @@ public class MyService extends Service {
             }
 
             Boolean isOpen = false;
+            Bitmap btm = null;
             try {
                 JSONObject jObject = new JSONObject(result);
                 isOpen = jObject.getJSONObject("state").getBoolean("open");
+                if (isOpen) {
+                    String camUrl = jObject.getJSONArray("cam").get(0).toString();
+                    btm = getCamImage(camUrl);
+                }
             } catch (JSONException e) {
                 Log.e("MyService", e.getMessage());
             }
 
             Context context = getApplicationContext();
-            Intent notificationIntent = null;
-            if (isOpen) {
-                 notificationIntent = new Intent(context, Snapshot.class);
-            } else {
-                 notificationIntent = new Intent();
-            }
+            //Intent notificationIntent = new Intent(context, MainActivity.class);
+            Intent notificationIntent = new Intent();
 
             PendingIntent contentIntent;
             contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
             Notification.Builder builder = new Notification.Builder(context);
 
             builder.setContentIntent(contentIntent)
-                    .setSmallIcon(R.drawable.nf_cadr)
+                    .setSmallIcon(R.drawable.ic_notification_cadr)
                     .setTicker(getString(R.string.notyTitle) + " " + getString(isOpen ? R.string.open : R.string.close))
                     .setWhen(System.currentTimeMillis())
-                    .setAutoCancel(false)
+                    .setAutoCancel(true)
                     .setOngoing(true)
                     .setContentTitle(getString(R.string.notyTitle))
                     .setContentText(getString(isOpen ? R.string.open : R.string.close));
 
-            Notification notification = builder.build();
+            Notification notification = null;
+            if (isOpen) {
+                notification = new Notification.BigPictureStyle(builder).bigPicture(btm).build();
+            } else {
+                notification = builder.build();
+            }
 
 
             NotificationManager notificationManager = (NotificationManager) context

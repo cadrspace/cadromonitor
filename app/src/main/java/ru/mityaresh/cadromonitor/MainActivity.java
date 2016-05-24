@@ -16,9 +16,13 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        //Intent intent = getIntent();
+        Intent intent = getIntent();
         startService(new Intent(this, MyService.class));
         finish();
+    }
+
+    public void onClickStart(View v) {
+        startService(new Intent(this, MyService.class));
     }
 }
 
