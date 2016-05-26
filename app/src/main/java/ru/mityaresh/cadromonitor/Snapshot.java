@@ -35,9 +35,6 @@ public class Snapshot extends Activity {
 
         mImageView = (ImageView) findViewById(R.id.snapshotfrc);
 
-        //GetPic getPicTask = new GetPic();
-        //getPicTask.execute();
-
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
