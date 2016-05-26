@@ -1,5 +1,7 @@
 // NetUtils.java -- Network utilites.
 
+package ru.mityaresh.cadromonitor;
+
 import java.net.InetAddress;
 import android.content.Context;
 import android.net.ConnectivityManager;
