@@ -57,16 +57,10 @@ public class MyService extends Service {
         try {
             InetAddress ipAddr = InetAddress.getByName("google.com"); //You can replace it with your name
 
-            if (ipAddr.equals("")) {
-                return false;
-            } else {
-                return true;
-            }
-
+            return ! ipAddr.isEmpty();
         } catch (Exception e) {
             return false;
         }
-
     }
 
     /**
