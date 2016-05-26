@@ -6,14 +6,14 @@ android {
 
     defaultConfig {
         applicationId "ru.mityaresh.cadromonitor"
-        minSdkVersion 16
+        minSdkVersion 9
         targetSdkVersion 23
         versionCode 3
         versionName "0.2.2"
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -22,5 +22,4 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.3.0'
 }

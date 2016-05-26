@@ -1,13 +1,11 @@
 package ru.mityaresh.cadromonitor;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -20,14 +18,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Snapshot extends AppCompatActivity {
+public class Snapshot extends Activity {
 
     private ImageView mImageView;
 
@@ -69,28 +66,6 @@ public class Snapshot extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
-
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        return cm.getActiveNetworkInfo() != null;
-    }
-
-    public boolean isInternetAvailable() {
-        try {
-            InetAddress ipAddr = InetAddress.getByName("google.com"); //You can replace it with your name
-
-            if (ipAddr.equals("")) {
-                return false;
-            } else {
-                return true;
-            }
-
-        } catch (Exception e) {
-            return false;
-        }
-
     }
 
     private static BufferedReader streamToReader(InputStream in) {
@@ -154,15 +129,14 @@ public class Snapshot extends AppCompatActivity {
         return null;
     }
     Bitmap showPic() {
-        if (isNetworkConnected() && isInternetAvailable()) {
+        Context context = getApplicationContext();
+        if (NetUtils.isNetworkConnected(context) && NetUtils.isInternetAvailable()) {
             String result = "";
             try {
                 result = httpGet("http://cadrspace.ru/status/json");
             } catch (IOException e) {
                 Log.e("Snapshot", e.getMessage());
             }
-
-            Context context = getApplicationContext();
 
             Resources res = context.getResources();
 

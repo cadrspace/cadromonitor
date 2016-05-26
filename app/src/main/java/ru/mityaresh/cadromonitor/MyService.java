@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Timer;
@@ -19,7 +18,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.os.IBinder;
 import android.util.Log;
 import org.json.JSONException;
@@ -48,22 +46,6 @@ public class MyService extends Service {
             }
         }, 0, POLL_TIMEOUT);
         return START_STICKY;
-    }
-
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        return cm.getActiveNetworkInfo() != null;
-    }
-
-    public boolean isInternetAvailable() {
-        try {
-            InetAddress ipAddr = InetAddress.getByName("google.com"); //You can replace it with your name
-
-            return ! ipAddr.equals("");
-        } catch (Exception e) {
-            return false;
-        }
     }
 
     /**
@@ -118,7 +100,8 @@ public class MyService extends Service {
     }
 
     void sendNotif() {
-        if (isNetworkConnected() && isInternetAvailable()) {
+        Context context = getApplicationContext();
+        if (NetUtils.isNetworkConnected(context) && NetUtils.isInternetAvailable()) {
             String result = "";
             try {
                 result = httpGet(SPACEAPI_ENDPOINT);
@@ -134,7 +117,7 @@ public class MyService extends Service {
                 Log.e("MyService", e.getMessage());
             }
 
-            Context context = getApplicationContext();
+
             Intent notificationIntent = null;
             if (isOpen) {
                  notificationIntent = new Intent(context, Snapshot.class);
