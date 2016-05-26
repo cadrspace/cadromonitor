@@ -1,13 +1,11 @@
 package ru.mityaresh.cadromonitor;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -20,14 +18,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Snapshot extends AppCompatActivity {
+public class Snapshot extends Activity {
 
     private ImageView mImageView;
 
@@ -132,15 +129,14 @@ public class Snapshot extends AppCompatActivity {
         return null;
     }
     Bitmap showPic() {
-        if (NetUtils.isNetworkConnected() && NetUtils.isInternetAvailable()) {
+        Context context = getApplicationContext();
+        if (NetUtils.isNetworkConnected(context) && NetUtils.isInternetAvailable()) {
             String result = "";
             try {
                 result = httpGet("http://cadrspace.ru/status/json");
             } catch (IOException e) {
                 Log.e("Snapshot", e.getMessage());
             }
-
-            Context context = getApplicationContext();
 
             Resources res = context.getResources();
 

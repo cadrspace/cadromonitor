@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/mitya/cadromonitor/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="e195f2a2c77d8c4ff51ef208e1b03981b9dd2ca4">
+        <dex dex="/Users/mitya/cadromonitor/app/build/intermediates/pre-dexed/debug/instant-run_a357b89a8ea38413ad3f15819a902dc577b26c56.jar" />
+    </item>
+    <item
+        jar="/Users/mitya/cadromonitor/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ff71b2cb6a7b230d570d717215f86356e577f2f7">
+        <dex dex="/Users/mitya/cadromonitor/app/build/intermediates/pre-dexed/debug/instant-run-bootstrap_c17b48b0abf06cb1c34ced97682d24b0f0a1987e.jar" />
+    </item>
+
+</items>
