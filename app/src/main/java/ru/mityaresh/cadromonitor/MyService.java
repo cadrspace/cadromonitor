@@ -29,6 +29,8 @@ import org.json.JSONObject;
 public class MyService extends Service {
     NotificationManager nm;
 
+    private static final int POLL_TIMEOUT = 15000; // ms
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -41,7 +43,7 @@ public class MyService extends Service {
             public void run() {
                 sendNotif();
             }
-        }, 0, 15000);
+        }, 0, POLL_TIMEOUT);
         return START_STICKY;
     }
 
