@@ -71,28 +71,6 @@ public class Snapshot extends AppCompatActivity {
         }
     }
 
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        return cm.getActiveNetworkInfo() != null;
-    }
-
-    public boolean isInternetAvailable() {
-        try {
-            InetAddress ipAddr = InetAddress.getByName("google.com"); //You can replace it with your name
-
-            if (ipAddr.equals("")) {
-                return false;
-            } else {
-                return true;
-            }
-
-        } catch (Exception e) {
-            return false;
-        }
-
-    }
-
     private static BufferedReader streamToReader(InputStream in) {
         BufferedReader br;
         try {
@@ -154,7 +132,7 @@ public class Snapshot extends AppCompatActivity {
         return null;
     }
     Bitmap showPic() {
-        if (isNetworkConnected() && isInternetAvailable()) {
+        if (NetUtils.isNetworkConnected() && NetUtils.isInternetAvailable()) {
             String result = "";
             try {
                 result = httpGet("http://cadrspace.ru/status/json");
