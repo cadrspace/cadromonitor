@@ -27,9 +27,6 @@ import org.json.JSONObject;
 public class MyService extends Service {
     NotificationManager nm;
 
-    private static final String SPACEAPI_ENDPOINT =
-      "http://cadrspace.ru/status/json";
-
     private static final int POLL_TIMEOUT = 15000; // ms
 
     @Override
@@ -104,7 +101,7 @@ public class MyService extends Service {
         if (NetUtils.isNetworkConnected(context) && NetUtils.isInternetAvailable()) {
             String result = "";
             try {
-                result = httpGet(SPACEAPI_ENDPOINT);
+                result = httpGet(NetUtils.SPACEAPI_ENDPOINT);
             } catch (IOException e) {
                 Log.e("MyService", e.getMessage());
             }

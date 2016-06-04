@@ -22,4 +22,6 @@ class NetUtils {
         }
 
     }
+    public static final String SPACEAPI_ENDPOINT =
+            "https://cadrspace.ru/status/json";
 }

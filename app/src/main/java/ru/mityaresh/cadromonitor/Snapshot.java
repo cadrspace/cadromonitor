@@ -130,7 +130,7 @@ public class Snapshot extends Activity {
         if (NetUtils.isNetworkConnected(context) && NetUtils.isInternetAvailable()) {
             String result = "";
             try {
-                result = httpGet("http://cadrspace.ru/status/json");
+                result = httpGet(NetUtils.SPACEAPI_ENDPOINT);
             } catch (IOException e) {
                 Log.e("Snapshot", e.getMessage());
             }
