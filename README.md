@@ -13,4 +13,4 @@ many people works inside the room at the moment.
 
 ## Requirements
 
-Application works with Android OS version 4.1 or later.
+Application works with Android OS version 2.3 or later.
