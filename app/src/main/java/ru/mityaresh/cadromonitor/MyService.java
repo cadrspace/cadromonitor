@@ -1,24 +1,15 @@
 package ru.mityaresh.cadromonitor;
 
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Timer;
-import java.util.TimerTask;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,12 +27,16 @@ public class MyService extends Service {
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                sendNotif();
-            }
-        }, 0, POLL_TIMEOUT);
+        try {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    sendNotif();
+                }
+            }, 1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return START_STICKY;
     }
 
@@ -73,7 +68,7 @@ public class MyService extends Service {
 
             PendingIntent contentIntent;
             contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-            Notification.Builder builder = new Notification.Builder(context);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
             builder.setContentIntent(contentIntent)
                     .setSmallIcon(R.drawable.nf_cadr)

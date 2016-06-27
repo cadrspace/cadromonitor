@@ -4,4 +4,5 @@
     <string name="notyTitle">Hackerspace CADR</string>
     <string name="open">Open</string>
     <string name="close">Closed :(</string>
+    <string name="serviceName">Push notification</string>
 </resources>

@@ -5,4 +5,5 @@
     <string name="notyTitle">Хакерспейс CADR</string>
     <string name="open">Открыт</string>
     <string name="close">Закрыт :(</string>
+    <string name="serviceName">Push уведомления</string>
 </resources>

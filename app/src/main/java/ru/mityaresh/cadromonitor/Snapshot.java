@@ -7,13 +7,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Snapshot extends Activity {
 
@@ -25,18 +24,18 @@ public class Snapshot extends Activity {
         setContentView(R.layout.activity_snapshot);
 
         mImageView = (ImageView) findViewById(R.id.snapshotfrc);
+        try {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    GetPic getPicTask = new GetPic();
+                    getPicTask.execute();
 
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                GetPic getPicTask = new GetPic();
-                getPicTask.execute();
-            }
-        };
-
-        Timer timer = new Timer();
-
-        timer.schedule(timerTask, 0, 1000);
+                }
+            }, 1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     class GetPic extends AsyncTask<Void, Void, Bitmap> {
