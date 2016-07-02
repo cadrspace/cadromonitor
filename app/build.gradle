@@ -8,8 +8,8 @@ android {
         applicationId "ru.mityaresh.cadromonitor"
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 6
-        versionName "1.0.1"
+        versionCode 8
+        versionName "1.1.0"
     }
     buildTypes {
         release {

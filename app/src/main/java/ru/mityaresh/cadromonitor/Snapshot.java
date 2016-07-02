@@ -24,13 +24,13 @@ public class Snapshot extends Activity {
         setContentView(R.layout.activity_snapshot);
 
         mImageView = (ImageView) findViewById(R.id.snapshotfrc);
+
         try {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     GetPic getPicTask = new GetPic();
                     getPicTask.execute();
-
                 }
             }, 1000);
         } catch (Exception e) {
@@ -46,10 +46,22 @@ public class Snapshot extends Activity {
         }
 
         @Override
-        protected void onPostExecute(Bitmap result) {
+        protected void onPostExecute(final Bitmap result) {
             try {
                 mImageView.setImageBitmap(result);
+                Log.wtf("eeee","eeee");
             } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
+            try {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        GetPic getPicTask = new GetPic();
+                        getPicTask.execute();
+                    }
+                }, 1000);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

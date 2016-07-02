@@ -1,13 +1,14 @@
 package ru.mityaresh.cadromonitor;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -24,25 +25,24 @@ public class MyService extends Service {
     public void onCreate() {
         super.onCreate();
         nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
-        try {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    sendNotif();
-                }
-            }, 1000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                sendNotif();
+            }
+        }, 0, POLL_TIMEOUT);
+
         return START_STICKY;
     }
 
     void sendNotif() {
         Context context = getApplicationContext();
-        if (NetUtils.isNetworkConnected(context) && NetUtils.isInternetAvailable()) {
+        if (NetUtils.isNetworkConnected(context) && NetUtils.isInternetAvailable() || true) {
             String result = "";
             try {
                 result = NetUtils.httpGet(NetUtils.SPACEAPI_ENDPOINT);
@@ -55,7 +55,7 @@ public class MyService extends Service {
                 JSONObject jObject = new JSONObject(result);
                 isOpen = jObject.getJSONObject("state").getBoolean("open");
             } catch (JSONException e) {
-                Log.e("MyService", e.getMessage());
+                Log.e("Error JSON", e.getMessage());
             }
 
 
